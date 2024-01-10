@@ -1,9 +1,8 @@
 import { Application,Request } from "express";
+import authRouter from "./routes/auth";
 
 const routes = (app:Application)=>{
-    app.use('/api/auth',(req:Request)=>{
-        console.log(req.url+ 'call reached index routes ....')
-    })
+    app.use('/api/auth', authRouter())
 }
 
 export default routes;
