@@ -1,4 +1,4 @@
-import { Application,Request } from "express";
+import { Application } from "express";
 import authRouter from "./routes/auth";
 
 const routes = (app:Application)=>{
