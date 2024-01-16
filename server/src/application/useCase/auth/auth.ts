@@ -25,7 +25,7 @@ export const userRegisterUseCase = async(
         role:'user',
     }
 
-    const token = await authServices.generateToken(payload)
+    const token = authServices.generateToken(payload)
 
     return {
         token,
