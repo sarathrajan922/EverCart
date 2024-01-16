@@ -18,6 +18,7 @@ import connectDB from "./frameworks/database/mongodb/connection";
 import routes from "./frameworks/server/routes";
 
 //import error handling middleware
+import errorHandleMiddleware from "./frameworks/server/middleware/errorHandleMiddleware";
 
 const app:Application = express();
 
@@ -31,5 +32,5 @@ const {startServer} = serverConfig(server)
  connectDB()
  routes(app)
 
-
+app.use(errorHandleMiddleware)
  startServer()
