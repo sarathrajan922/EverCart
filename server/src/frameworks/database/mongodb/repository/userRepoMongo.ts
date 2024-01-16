@@ -7,8 +7,13 @@ export const userRepositoryMongoDB = ()=>{
     const addUser = async(user:UserRegisterInterface)=>{
         return await User.create(user)
     }
+
+    const getUserEmail = async(email:string)=>{
+        return await User.findOne({email})
+    }
     return {
-        addUser
+        addUser,
+        getUserEmail
     }
 };
 
