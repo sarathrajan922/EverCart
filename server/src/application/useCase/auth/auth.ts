@@ -1,3 +1,4 @@
+import { authServices } from './../../../frameworks/services/authServices';
 import { UserRegisterInterface } from "../../../types/user";
 import { UserDbInterface } from "../../repository/userDbRepository";
 import { AuthServicesInterface } from "../../services/authServicesInterface";
@@ -30,5 +31,33 @@ export const userRegisterUseCase = async(
     return {
         token,
         userData
+    }
+}
+
+export const userLoginUseCase = async(
+    email:string,
+    password:string,
+    userRepository:ReturnType<UserDbInterface>,
+    authServices:ReturnType<AuthServicesInterface>
+) =>{
+    const user = await userRepository.getUserEmail(email);
+    if(!user){
+        throw new AppError(`${email} user is not exist`,HttpStatus.NOT_FOUND)
+    }
+    const isPasswordCorrect = await authServices.comparePassword(password,user?.password ?? "");
+    if(!isPasswordCorrect){
+        throw new AppError(`password doesn't match`,HttpStatus.UNAUTHORIZED)
+    }
+
+    let id = user?._id?.toString() ?? ""
+    const payload= {
+        id,
+        role:'user'
+    }
+
+    const token = authServices.generateToken(payload)
+    return{
+        token,
+        userData: user
     }
 }

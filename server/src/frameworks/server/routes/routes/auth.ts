@@ -14,6 +14,9 @@ const authRouter = () => {
     userRepositoryMongoDB
   );
   router.post("/signup", controller.userRegister);
+  router.post('/login',controller.userLogin);
+
+  
   return router;
 };
 
