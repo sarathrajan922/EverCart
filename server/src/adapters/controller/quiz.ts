@@ -4,6 +4,7 @@ import asyncHandler from 'express-async-handler'
 import { Response } from 'express';
 import { customRequest } from '../../types/expressCustomRequest';
 import { QuizInterface } from '../../types/quiz';
+import { createQuizUseCase } from '../../application/useCase/user/createQuiz';
 
 
 const quizController = (
@@ -13,10 +14,8 @@ const quizController = (
     const dbRepositoryUser = userDbRepositoryInterface(userDbRepositoryMongoDB())
 
     const createQuiz = asyncHandler(async (req:customRequest,res:Response)=>{
-        //? collect data from req.body
-        console.log('api reached createQuiz function')
-        const data:QuizInterface = {
-            createdBy: '12345667',
+     
+        const data:any = {
             category: 'Science',
             questions: [
                 {
@@ -33,9 +32,14 @@ const quizController = (
             ]
         };
 
-        const uploadedData = await dbRepositoryUser.createQuiz(data)
-        console.log(uploadedData)
-        res.send("Done")
+        const userId = req?.payload?.id ?? '';
+
+        const uploadedData = await createQuizUseCase(userId,data,dbRepositoryUser)
+      
+        res.json({
+            message:'create quiz successfully',
+            uploadedData
+        })
 
     });
 
