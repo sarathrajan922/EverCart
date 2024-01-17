@@ -5,7 +5,8 @@ import { AuthServicesInterface } from "../../application/services/authServicesIn
 import asyncHandler from "express-async-handler";
 import { Request, Response } from "express";
 import { UserRegisterInterface } from "../../types/user";
-import { userRegisterUseCase } from "../../application/useCase/auth/auth";
+import { userRegisterUseCase , userLoginUseCase} from "../../application/useCase/auth/auth";
+
 
 const authController = (
   authServicesInterface: AuthServicesInterface,
@@ -30,8 +31,24 @@ const authController = (
     });
   });
 
+  const userLogin = asyncHandler(async(req:Request,res:Response)=>{
+    const {email,password}:{email:string,password:string} = req.body;
+    const {token ,userData}= await userLoginUseCase(
+        email,
+        password,
+        dbRepositoryUser,
+        authServices
+    );
+    res.json({
+        message:'user login successful',
+        token,
+        userData
+    })
+  })
+
   return {
     userRegister,
+    userLogin
   };
 };
 
