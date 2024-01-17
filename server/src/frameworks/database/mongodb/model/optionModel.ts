@@ -5,7 +5,7 @@ const optionSchema = new Schema({
         type: String,
         required: true
     },
-    isChecked: {
+    isCorrect: {
         type: Boolean,
         default: false
     }
