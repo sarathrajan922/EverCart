@@ -1,6 +1,6 @@
 import { UserRepositoryMongoDB } from "../../frameworks/database/mongodb/repository/userRepoMongo";
 import { UserDbInterface } from "../../application/repository/userDbRepository";
-import { AuthServiceType } from "./../../frameworks/services/authServices";
+import { AuthServiceType } from "../../frameworks/services/authServices";
 import { AuthServicesInterface } from "../../application/services/authServicesInterface";
 import asyncHandler from "express-async-handler";
 import { Request, Response } from "express";

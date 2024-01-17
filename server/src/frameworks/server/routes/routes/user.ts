@@ -1,20 +1,15 @@
-import express from 'express'
-import userController from '../../../../adapters/controller/userController';
+import express from "express";
+import quizController from "../../../../adapters/controller/quiz";
 import { userDbRepository } from "../../../../application/repository/userDbRepository";
 import { userRepositoryMongoDB } from "../../../database/mongodb/repository/userRepoMongo";
 
+const userRouter = () => {
+  const router = express.Router();
+  const quizControl = quizController(userDbRepository, userRepositoryMongoDB);
 
-const userRouter = ()=>{
-    const router = express.Router();
-  const controller = userController(
-    userDbRepository,
-    userRepositoryMongoDB
-  );
+  router.post("/quiz", quizControl.createQuiz);
 
-
-    router.post('/quiz',controller.createQuiz)
-
-    return router;
-}
+  return router;
+};
 
 export default userRouter;

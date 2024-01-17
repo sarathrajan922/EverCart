@@ -1,11 +1,11 @@
-import { UserRepositoryMongoDB } from './../../frameworks/database/mongodb/repository/userRepoMongo';
+import { UserRepositoryMongoDB } from '../../frameworks/database/mongodb/repository/userRepoMongo';
 import { UserDbInterface} from '../../application/repository/userDbRepository';
 import asyncHandler from 'express-async-handler'
 import { Response } from 'express';
 import { customRequest } from '../../types/expressCustomRequest';
 
 
-const userController = (
+const quizController = (
     userDbRepositoryInterface: UserDbInterface,
     userDbRepositoryMongoDB:UserRepositoryMongoDB
 ) => {
@@ -15,6 +15,7 @@ const userController = (
         //? collect data from req.body
         console.log('api reached api/user/quiz')
         res.send("Done")
+
     });
 
     return {
@@ -22,4 +23,4 @@ const userController = (
     }
 }
 
-export default userController;
+export default quizController;
