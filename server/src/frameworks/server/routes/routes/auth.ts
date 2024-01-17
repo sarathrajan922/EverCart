@@ -1,6 +1,6 @@
 import express from "express";
 import { userRepositoryMongoDB } from "../../../database/mongodb/repository/userRepoMongo";
-import authController from "../../../../adapters/controller/authController";
+import authController from "../../../../adapters/controller/auth";
 import { authServicesInterface } from "../../../../application/services/authServicesInterface";
 import { authServices } from "./../../../services/authServices";
 import { userDbRepository } from "../../../../application/repository/userDbRepository";
@@ -14,9 +14,8 @@ const authRouter = () => {
     userRepositoryMongoDB
   );
   router.post("/signup", controller.userRegister);
-  router.post('/login',controller.userLogin);
+  router.post("/login", controller.userLogin);
 
-  
   return router;
 };
 

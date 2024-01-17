@@ -1,6 +1,8 @@
 
 import User from "../model/userModel";
 import { UserRegisterInterface } from "../../../../types/user";
+import { QuizInterface } from "../../../../types/quiz";
+import Quiz from "../model/quizModel";
 
 
 export const userRepositoryMongoDB = ()=>{
@@ -11,10 +13,18 @@ export const userRepositoryMongoDB = ()=>{
     const getUserEmail = async(email:string)=>{
         return await User.findOne({email})
     }
+
+    const createQuiz = async (data:QuizInterface)=>{
+        return await Quiz.create(data)
+    }
+    
     return {
         addUser,
-        getUserEmail
+        getUserEmail,
+        createQuiz
     }
+
+    
 };
 
 export type UserRepositoryMongoDB = typeof userRepositoryMongoDB;
