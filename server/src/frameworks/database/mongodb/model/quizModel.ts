@@ -6,6 +6,10 @@ const quizSchema = new Schema({
     type:String,
     required:[true, 'please provide a userId']
     },
+    premium:{
+        type:Boolean,
+        default:false
+    },
     category: {
         type: String,
         required: [true,'please provide a category name']
