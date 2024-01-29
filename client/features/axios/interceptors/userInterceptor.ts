@@ -1,6 +1,5 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
 import BASE_URL from "@/config";
-import { error } from "console";
 
 const userSetupInterceptors = (): AxiosInstance => {
   const api: AxiosInstance = axios.create({
