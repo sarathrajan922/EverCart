@@ -42,7 +42,7 @@ export const userLoginUseCase = async(
 ) =>{
     const user = await userRepository.getUserEmail(email);
     if(!user){
-        throw new AppError(`${email} user is not exist`,HttpStatus.NOT_FOUND)
+        throw new AppError(`${email} user not exist`,HttpStatus.NOT_FOUND)
     }
     const isPasswordCorrect = await authServices.comparePassword(password,user?.password ?? "");
     if(!isPasswordCorrect){
