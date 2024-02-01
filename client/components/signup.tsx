@@ -1,11 +1,20 @@
+"use client"
 import React from "react";
+import { useRouter } from "next/navigation";
 
 const SignUp: React.FC = () => {
+  const router = useRouter();
+
+  const switchToLogin = () => {
+    router.push("/login");
+  };
   return (
     <div className="w-full h-[41.5rem] bg-gray-200 flex items-center justify-center">
       <div className=" w-[58rem] h-[33rem] bg-white rounded-md shadow-2xl">
         {/* form */}
-        <h3 className="mt-6 mb-4 ms-8 text-sky-600 text-bold">Contact Information</h3>
+        <h3 className="mt-6 mb-4 ms-8 text-sky-600 text-bold">
+          Contact Information
+        </h3>
         <form>
           <div className="grid gap-3  my-8 ms-7 md:grid-cols-2">
             {/* first name & lastName */}
@@ -40,7 +49,7 @@ const SignUp: React.FC = () => {
               />
             </div>
 
-  {/* email & mobile */}
+            {/* email & mobile */}
 
             <div>
               <label
@@ -73,7 +82,7 @@ const SignUp: React.FC = () => {
               />
             </div>
 
-    {/* password & confirm password */}
+            {/* password & confirm password */}
 
             <div>
               <label
@@ -105,15 +114,22 @@ const SignUp: React.FC = () => {
                 required
               />
             </div>
-
           </div>
           <div className="flex justify-center items-center mt-5">
-            <button className="w-[13.5rem] h-10 bg-sky-600 rounded-sm mt-5 uppercase">submit</button>
+            <button className="w-[13.5rem] h-10 bg-sky-600 rounded-sm mt-5 uppercase">
+              submit
+            </button>
           </div>
         </form>
         <div className="flex justify-center items-center text-sm text-gray-600 mt-2">
-            Already have an Account!
-            <span className="text-sky-600 text-sm ms-1 underline">Login</span>
+          Already have an Account!
+          <span
+            className="text-sky-600 text-sm ms-1 underline cursor-pointer"
+            onClick={() => switchToLogin()}
+          >
+            {" "}
+            Login
+          </span>
         </div>
       </div>
     </div>
