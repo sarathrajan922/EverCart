@@ -5,6 +5,7 @@ import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userLoginSchema } from "@/validation/userLogin";
+import userLoginApi from "@/features/axios/api/userLogin";
 
 interface Inputs {
   email: string;
@@ -27,7 +28,11 @@ const Login: React.FC = () => {
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     //api call here
-    console.log(data);
+    userLoginApi(data).then((response)=>{
+      localStorage.setItem('userToken',response?.token)
+    }).catch((err)=>{
+      console.error(err.message)
+    })
   };
 
   return (
