@@ -1,8 +1,9 @@
+import { UserInputInterface } from './../../../types/userRegister';
 import axios, { AxiosRequestConfig } from "axios";
 import BASE_URL, { urls } from "@/config";
 
-const userRegisterApi = async (values: any) => {
-  //! change the type 'any' into corresponding userData interface
+
+const userRegisterApi = async (values: UserInputInterface) => {
 
   try {
     const config: AxiosRequestConfig = {
