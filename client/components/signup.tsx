@@ -75,7 +75,7 @@ const SignUp: React.FC = () => {
                 id="firstName"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-[24rem] p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="John"
-                required
+                
               />
               {errors.firstName?.message && (
                 <div className="text-red-500 text-sm">
@@ -97,7 +97,7 @@ const SignUp: React.FC = () => {
                 id="lastName"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-[24rem] p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Doe"
-                required
+                
               />
               {errors.lastName?.message && (
                 <div className="text-red-500 text-sm">
@@ -122,7 +122,7 @@ const SignUp: React.FC = () => {
                 id="email"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-[24rem] p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="John"
-                required
+                
               />
               {errors.email?.message && (
                 <div className="text-red-500 text-sm">
@@ -142,7 +142,7 @@ const SignUp: React.FC = () => {
                 disabled={isSubmitting}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-[24rem] p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Doe"
-                required
+                
               />
               {errors.mobile?.message && (
                 <div className="text-red-500 text-sm">
@@ -168,7 +168,7 @@ const SignUp: React.FC = () => {
                 name="password"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-[24rem] p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="John"
-                required
+                
               />
               {errors.password?.message && (
                 <div className="text-red-500 text-sm">
@@ -190,7 +190,7 @@ const SignUp: React.FC = () => {
                 type="password"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-[24rem] p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Doe"
-                required
+                
               />
               {errors.conformPassword?.message || confirmPassError ? (
                 <div className="text-red-500 text-sm">
@@ -210,8 +210,7 @@ const SignUp: React.FC = () => {
               submit
             </button>
           </div>
-        </form>
-        <div className="flex justify-center items-center text-sm text-gray-600 mt-2">
+          <div className="flex justify-center items-center text-sm text-gray-600 mt-2">
           Already have an Account!
           <span
             className="text-sky-600 text-sm ms-1 underline cursor-pointer"
@@ -222,6 +221,8 @@ const SignUp: React.FC = () => {
           </span>
           <pre>{JSON.stringify(watch(), null, 2)}</pre>
         </div>
+        </form>
+        
       </div>
     </div>
   );

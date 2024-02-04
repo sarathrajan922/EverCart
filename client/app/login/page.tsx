@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import Navbar from "@/components/nav";
@@ -6,6 +7,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userLoginSchema } from "@/validation/userLogin";
 import userLoginApi from "@/features/axios/api/userLogin";
+import { useRouter } from "next/navigation";
 
 interface Inputs {
   email: string;
@@ -13,6 +15,8 @@ interface Inputs {
 }
 
 const Login: React.FC = () => {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -28,11 +32,17 @@ const Login: React.FC = () => {
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     //api call here
-    userLoginApi(data).then((response)=>{
-      localStorage.setItem('userToken',response?.token)
-    }).catch((err)=>{
-      console.error(err.message)
-    })
+    userLoginApi(data)
+      .then((response) => {
+        localStorage.setItem("userToken", response?.token);
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
+  };
+
+  const switchToSignUp = () => {
+    router.push("/");
   };
 
   return (
@@ -65,7 +75,6 @@ const Login: React.FC = () => {
                 id="email"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-[24rem] p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="example@gmail.com"
-                required
               />
               {errors.email?.message && (
                 <div className="text-red-500 text-sm">
@@ -88,7 +97,6 @@ const Login: React.FC = () => {
                 name="password"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-[24rem] p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="****"
-                required
               />
               {errors.password?.message && (
                 <div className="text-red-500 text-sm">
@@ -105,11 +113,20 @@ const Login: React.FC = () => {
                 submit
               </button>
             </div>
-            <pre>{JSON.stringify(watch(), null, 2)}</pre>
+            <div className="flex justify-center items-center text-sm text-gray-600 mt-2">
+              Don't have an Account!
+              <span
+                className="text-sky-600 text-sm ms-1 underline cursor-pointer"
+                onClick={() => switchToSignUp()}
+              >
+                {" "}
+                Register
+              </span>
+              <pre>{JSON.stringify(watch(), null, 2)}</pre>
+            </div>
           </form>
         </div>
       </div>
-     
     </main>
   );
 };
