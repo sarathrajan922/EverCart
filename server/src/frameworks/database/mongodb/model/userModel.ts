@@ -17,7 +17,6 @@ const userSchema = new Schema({
     mobile: {
         type: Number,
         required: [true, 'please provide a valid mobile number'],
-        unique: true
     },
     password:{
         type:String,

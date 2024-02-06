@@ -43,6 +43,7 @@ const SignUp: React.FC = () => {
     userRegisterApi(data).then((response)=>{
       console.log(response?.message)
       localStorage.setItem('userToken',response?.token)
+      router.push('/home')
     }).catch((error)=>{
       console.error(error.message)
     })
