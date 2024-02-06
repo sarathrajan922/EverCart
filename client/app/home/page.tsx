@@ -14,10 +14,10 @@ const Home: React.FC = () => {
   };
 
   const switchToActivity = () => {
-    router.push('/activity')
+    router.push("/activity");
   };
 
-  const switchToPremium = async() => {
+  const switchToPremium = async () => {
     const { value: accept } = await Swal.fire({
       title: "Terms and conditions",
       input: "checkbox",
@@ -30,23 +30,22 @@ const Home: React.FC = () => {
       `,
       inputValidator: (result) => {
         return !result && "You need to agree with T&C";
-      }
+      },
     });
     if (accept) {
       Swal.fire("You agreed with T&C :)");
-      router.push('/razorpay')
+      router.push("/razorpay");
     }
   };
 
   return (
     <>
       <HomeNavBar />
-      <Carousel/>
-    <CardHeading/>
+      <Carousel />
+      <CardHeading />
 
-
-      <main className="flex min-h-screen items-center justify-evenly p-14  ">
-        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-2xl hover:shadow-none">
+      <main className="flex min-h-screen items-center justify-around  mx-24 px-14  ">
+        <div className="max-w-sm p-5  rounded-lg ">
           <a href="#">
             <img
               className="rounded-t-lg"
@@ -57,7 +56,7 @@ const Home: React.FC = () => {
           <div className="p-5">
             <a href="#">
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">
-              Explore key technology acquisitions in 2024
+                Explore key technology acquisitions in 2024
               </h5>
             </a>
             <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
@@ -66,15 +65,15 @@ const Home: React.FC = () => {
             </p>
 
             <button
-              onClick={()=> switchToQuizPage()}
-              className="flex justify-center w-full  px-3 py-2 text-sm font-medium text-center text-white bg-sky-600 rounded-lg hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-sky-600 dark:hover:bg-sky-500 dark:focus:ring-sky-800"
+              onClick={() => switchToQuizPage()}
+              className="flex justify-center w-full  px-3 py-2 text-sm font-medium text-center text-white bg-gray-600 rounded-lg hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500 dark:focus:ring-gray-800"
             >
               Take Quiz
             </button>
           </div>
         </div>
 
-        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-2xl hover:shadow-none">
+        <div className="max-w-sm p-5  rounded-lg">
           <a href="#">
             <img
               className="rounded-t-lg"
@@ -93,14 +92,14 @@ const Home: React.FC = () => {
               far, in reverse chronological order.
             </p>
             <button
-              onClick={()=> switchToActivity()}
-              className="flex justify-center w-full px-3 py-2 text-sm font-medium text-center text-white bg-sky-600 rounded-lg hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-sky-600 dark:hover:bg-sky-500 dark:focus:ring-sky-800"
+              onClick={() => switchToActivity()}
+              className="flex justify-center w-full  px-3 py-2 text-sm font-medium text-center text-white bg-gray-600 rounded-lg hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500 dark:focus:ring-gray-800"
             >
               My Activity
             </button>
           </div>
         </div>
-        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-2xl hover:shadow-none ">
+        <div className="max-w-sm p-5  rounded-lg">
           <a href="#">
             <img
               className="rounded-t-lg"
@@ -111,7 +110,7 @@ const Home: React.FC = () => {
           <div className="p-5">
             <a href="#">
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">
-              Upgrade To Premium For An Enhanced User Experience
+                Upgrade To Premium For  Enhanced 
               </h5>
             </a>
             <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
@@ -119,11 +118,26 @@ const Home: React.FC = () => {
               far, in reverse chronological order.
             </p>
             <button
-              onClick={()=>switchToPremium()}
-              className="flex justify-center w-full  px-3 py-2 text-sm font-medium text-center text-white bg-sky-600 rounded-lg hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-sky-600 dark:hover:bg-sky-500 dark:focus:ring-sky-800"
+              onClick={() => switchToPremium()}
+              className="flex justify-center w-full  px-3 py-2 text-sm font-medium text-center text-white bg-gray-600 rounded-lg hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500 dark:focus:ring-gray-800"
             >
               Upgrade To Premium
+              <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-5 ms-1 h-5 text-yellow-400"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"
+              />
+            </svg>
             </button>
+            
           </div>
         </div>
       </main>

@@ -77,8 +77,9 @@ const Login: React.FC = () => {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between  bg-gray-100">
-      <Navbar head={"LOGIN"} />
+    <><Navbar head={"LOGIN"} />
+    <main className="flex min-h-screen flex-col items-center justify-between mt-20 bg-gray-100">
+      
       <div className="flex w-full h-screen ">
         <div className="w-1/2  text-center">
           <img
@@ -88,9 +89,10 @@ const Login: React.FC = () => {
           />
         </div>
         <div className="w-1/2 bg-gray-100 flex flex-col justify-center items-center">
+          <div className='w-[30rem] h-[22rem] bg-white flex justify-center items-center rounded shadow-lg'>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex justify-center items-center">
-              <h1 className="text-black text-2xl ">Login Form </h1>
+            <div className="flex justify-center items-center ">
+              <h1 className="text-gray-700 text-2xl uppercase font-bold ">Login Form </h1>
             </div>
             <div>
               <label
@@ -144,7 +146,7 @@ const Login: React.FC = () => {
                 submit
               </button>
             </div>
-            <div className="flex justify-center items-center text-sm text-gray-600 mt-2">
+            <div className="flex justify-center items-center text-sm text-gray-600 my-2">
               Don't have an Account!
               <span
                 className="text-sky-600 text-sm ms-1 underline cursor-pointer"
@@ -156,9 +158,11 @@ const Login: React.FC = () => {
               {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
             </div>
           </form>
+          </div>
         </div>
       </div>
     </main>
+    </>
   );
 };
 
