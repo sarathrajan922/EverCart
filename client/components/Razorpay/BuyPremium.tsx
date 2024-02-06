@@ -13,7 +13,7 @@ const BuyProduct = () => {
     try {
       const apiKey = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
       const order = await RazorpayApi();
-      console.log(order);
+
       const obj = {
         key: apiKey,
         name: "quizsphere",
@@ -24,10 +24,7 @@ const BuyProduct = () => {
         order_id: order.id,
         description: "Understanding RazorPay Integration",
         handler: async (response: any) => {
-          console.log("Razorpay Response:", response);
-
           const verifyResult = await RazorpayVerifyPaymentApi(response, order);
-          console.log("Verification result:", verifyResult);
 
           if (verifyResult?.result === "success") {
             console.log("Redirecting...");

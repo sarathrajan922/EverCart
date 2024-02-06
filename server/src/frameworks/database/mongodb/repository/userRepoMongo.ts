@@ -17,11 +17,18 @@ export const userRepositoryMongoDB = ()=>{
     const createQuiz = async (data:QuizInterface)=>{
         return await Quiz.create(data)
     }
+
+    const upgradeToPremium = async(userId:string)=>{
+        return await User.findByIdAndUpdate(userId, { premium: true }, { new: true });
+    }
+
+    
     
     return {
         addUser,
         getUserEmail,
-        createQuiz
+        createQuiz,
+        upgradeToPremium
     }
 
     

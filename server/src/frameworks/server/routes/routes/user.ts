@@ -13,7 +13,9 @@ const userRouter = () => {
   const quizControl = quizController(userDbRepository, userRepositoryMongoDB);
   const paymentControl = paymentController(
     razorpayServicesInterface,
-    razorpayServices
+    razorpayServices,
+    userDbRepository,
+    userRepositoryMongoDB
   )
   router.post(
     "/quiz",
