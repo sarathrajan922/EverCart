@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { userLoginSchema } from "@/validation/userLogin";
 import userLoginApi from "@/features/axios/api/userLogin";
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 interface Inputs {
   email: string;
@@ -15,6 +16,31 @@ interface Inputs {
 }
 
 const Login: React.FC = () => {
+  const showToast = (message: string) => {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      },
+    });
+    if (message === "success") {
+      Toast.fire({
+        icon: "success",
+        title: "Signed in successfully",
+      });
+    } else {
+      Toast.fire({
+        icon: "error",
+        title: message,
+      });
+    }
+  };
+
   const router = useRouter();
 
   const {
@@ -35,9 +61,13 @@ const Login: React.FC = () => {
     userLoginApi(data)
       .then((response) => {
         localStorage.setItem("userToken", response?.token);
-        router.push('/home')
+        showToast("success");
+        setTimeout(() => {
+          router.push("/home");
+        }, 2000);
       })
       .catch((err) => {
+        showToast(err.message);
         console.error(err.message);
       });
   };
@@ -123,7 +153,7 @@ const Login: React.FC = () => {
                 {" "}
                 Register
               </span>
-              <pre>{JSON.stringify(watch(), null, 2)}</pre>
+              {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
             </div>
           </form>
         </div>
