@@ -35,6 +35,7 @@ const Login: React.FC = () => {
     userLoginApi(data)
       .then((response) => {
         localStorage.setItem("userToken", response?.token);
+        router.push('/home')
       })
       .catch((err) => {
         console.error(err.message);
