@@ -1,10 +1,10 @@
+// import CreateQuiz from '@/components/createQuiz';
+import CreateQuiz from '@/components/questionForm';
 import React from 'react'
 
 const QuizPage :React.FC = ()=>{
     return (
-        <div>
-            this is quiz page
-        </div>
+        <CreateQuiz/>
     )
 }
 
