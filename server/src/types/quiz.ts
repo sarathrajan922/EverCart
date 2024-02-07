@@ -4,7 +4,7 @@ interface Option {
 }
 
 interface Question {
-    text: string;
+    question: string;
     options: Option[];
     // correctOption: number;
 }

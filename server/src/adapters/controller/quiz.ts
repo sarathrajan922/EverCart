@@ -15,26 +15,9 @@ const quizController = (
 
     const createQuiz = asyncHandler(async (req:customRequest,res:Response)=>{
      
-        const data:any = {
-            category: 'Science',
-            questions: [
-                {
-                    text: 'What is the capital of France?',
-                    options: [
-                        { text: 'Berlin' },
-                        { text: 'Paris', isCorrect: true },
-                        { text: 'London' },
-                        { text: 'Rome' }
-                    ],
-                    
-                },
-                
-            ]
-        };
-
         const userId = req?.payload?.id ?? '';
 
-        const uploadedData = await createQuizUseCase(userId,data,dbRepositoryUser)
+        const uploadedData = await createQuizUseCase(userId,req?.body,dbRepositoryUser)
       
         res.json({
             message:'create quiz successfully',
