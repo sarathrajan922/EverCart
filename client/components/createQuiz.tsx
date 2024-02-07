@@ -4,6 +4,7 @@ import { useState } from "react";
 import HomeNavBar from "./HomeNavBar";
 import { quizSchema } from "@/validation/quiz";
 import Swal from "sweetalert2";
+import createQuizApi from "@/features/axios/api/createQuiz";
 
 interface Option {
   text: string;
@@ -102,6 +103,38 @@ export default function CreateQuiz() {
     setQuestions(newQuestions);
   };
 
+  const autoCloseModal = () => {
+    let timerInterval: NodeJS.Timeout | undefined;
+    const popup = Swal.getPopup();
+    if (popup) {
+        Swal.fire({
+            title: "Publishing!",
+            html: "I will close in <b></b> milliseconds.",
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading();
+                const timer = popup.querySelector("b");
+                if (timer) {
+                    timerInterval = setInterval(() => {
+                        timer.textContent = `${Swal.getTimerLeft()}`;
+                    }, 100);
+                }
+            },
+            willClose: () => {
+                clearInterval(timerInterval);
+            },
+        }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+                console.log("I was closed by the timer");
+            }
+        });
+    }
+};
+
+
+
   const finalConformation = async (formData: any) => {
     const { value: accept } = await Swal.fire({
       title: "Accessibility",
@@ -116,7 +149,18 @@ export default function CreateQuiz() {
     });
     let premium = accept ? true : false;
     console.log(premium);
+    formData.premium = premium;
+    console.log(formData);
+    autoCloseModal()
     //api call here
+    createQuizApi(formData)
+      .then((response) => {
+        
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   };
 
   const handleFinish = () => {

@@ -2,7 +2,7 @@ import { Schema,model } from "mongoose";
 import Option from "./optionModel";
 
 const questionSchema = new Schema({
-    text: {
+    question: {
         type: String,
         required: true
     },
