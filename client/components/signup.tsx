@@ -82,7 +82,7 @@ const SignUp: React.FC = () => {
     router.push("/login");
   };
   return (
-    <div className="w-full h-[41.5rem] bg-gray-200 flex items-center justify-center">
+    <div className="w-full h-[41.5rem] bg-gray-200 flex items-center mt-20 justify-center">
       <div className=" w-[58rem] h-[33rem] bg-white rounded-md shadow-2xl">
         {/* form */}
         <h3 className="mt-6 mb-4 ms-8 text-sky-600 text-bold">
@@ -243,7 +243,7 @@ const SignUp: React.FC = () => {
               {" "}
               Login
             </span>
-            <pre>{JSON.stringify(watch(), null, 2)}</pre>
+            {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
           </div>
         </form>
       </div>

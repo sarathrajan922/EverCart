@@ -3,10 +3,10 @@ import React from "react";
 
 const Carousel: React.FC = () => {
   return (
-    <>
+   
       <div
         id="controls-carousel"
-        className="relative w-full mt-5"
+        className=" w-full relative  mt-28"
         data-carousel="static"
       >
         {/* <!-- Carousel wrapper --> */}
@@ -71,7 +71,7 @@ const Carousel: React.FC = () => {
           </span>
         </button>
       </div>
-    </>
+   
   );
 };
 
