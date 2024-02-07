@@ -6,7 +6,7 @@ import authenticationMiddleware from "../../middleware/authenticationMiddleware"
 import { userRoleCheckMiddleware } from "./../../middleware/roleCheck";
 import paymentController from "../../../../adapters/controller/payment";
 import { razorpayServicesInterface } from "../../../../application/services/razorpayServicesInterface";
-import { razorpayServices } from './../../../services/razorpayServices';
+import { razorpayServices } from "./../../../services/razorpayServices";
 
 const userRouter = () => {
   const router = express.Router();
@@ -16,7 +16,7 @@ const userRouter = () => {
     razorpayServices,
     userDbRepository,
     userRepositoryMongoDB
-  )
+  );
   router.post(
     "/quiz",
     authenticationMiddleware,
@@ -24,8 +24,25 @@ const userRouter = () => {
     quizControl.createQuiz
   );
 
-  router.post('/razorpay',authenticationMiddleware,userRoleCheckMiddleware,paymentControl.generateRazorypay)
-  router.post('/verifyPayment',authenticationMiddleware,userRoleCheckMiddleware,paymentControl.verifyPayment)
+  router.get(
+    "/getAllQuizData",
+    authenticationMiddleware,
+    userRoleCheckMiddleware,
+    quizControl.fetchAllQuizData
+  );
+
+  router.post(
+    "/razorpay",
+    authenticationMiddleware,
+    userRoleCheckMiddleware,
+    paymentControl.generateRazorypay
+  );
+  router.post(
+    "/verifyPayment",
+    authenticationMiddleware,
+    userRoleCheckMiddleware,
+    paymentControl.verifyPayment
+  );
 
   return router;
 };
