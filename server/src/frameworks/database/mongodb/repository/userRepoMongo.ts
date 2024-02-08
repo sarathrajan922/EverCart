@@ -26,7 +26,17 @@ export const userRepositoryMongoDB = () => {
 
   const fetchAllQuiz = async () => {
     try {
-      return await Quiz.find();
+      return await Quiz.aggregate([
+        {
+          $project:{
+            category: 1,
+            createdBy: 1,
+              premium: 1,
+             _id: 1,
+
+          }
+        }
+      ]);
     } catch (error) {
       throw error;
     }
