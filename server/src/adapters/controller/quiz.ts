@@ -31,7 +31,7 @@ const quizController = (
   const fetchAllQuizData = asyncHandler(
     async (req: customRequest, res: Response) => {
       const data = await fetchAllQuizUseCase(dbRepositoryUser);
-
+      
       res.json({
         message: "fetch All quiz data successfully",
         quizData: data,
