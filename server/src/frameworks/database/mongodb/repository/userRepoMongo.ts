@@ -42,12 +42,22 @@ export const userRepositoryMongoDB = () => {
     }
   };
 
+  const fetchQuiz = async (quizId:string)=>{
+    try{
+      return await Quiz.findOne({_id: quizId})
+
+    }catch(error){
+      throw error;
+    }
+  }
+
   return {
     addUser,
     getUserEmail,
     createQuiz,
     upgradeToPremium,
     fetchAllQuiz,
+    fetchQuiz
   };
 };
 

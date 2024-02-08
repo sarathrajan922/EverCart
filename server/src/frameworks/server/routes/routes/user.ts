@@ -31,6 +31,8 @@ const userRouter = () => {
     quizControl.fetchAllQuizData
   );
 
+  router.get('/getQuiz/:quizId',authenticationMiddleware,userRoleCheckMiddleware,quizControl.fetchQuiz)
+
   router.post(
     "/razorpay",
     authenticationMiddleware,
