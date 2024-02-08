@@ -3,6 +3,7 @@
 import HomeNavBar from "@/components/HomeNavBar";
 import QuizList from "@/components/quizList";
 import fetchAllQuizDataApi from "@/features/axios/api/fetchAllQuiz";
+import fetchQuizDataApi from "@/features/axios/api/fetchQuiz";
 import React, { useEffect } from "react";
 
 const QuizPage: React.FC = () => {
@@ -56,7 +57,7 @@ const QuizPage: React.FC = () => {
   ];
 
   useEffect(() => {
-    fetchAllQuizDataApi().then((res) => {
+    fetchQuizDataApi('65c51d471b877ac688039ca0').then((res) => {
       console.log(res);
     });
   }, []);
