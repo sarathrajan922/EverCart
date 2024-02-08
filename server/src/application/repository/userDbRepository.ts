@@ -8,12 +8,14 @@ export const userDbRepository =(repository:ReturnType<UserRepositoryMongoDB>)=>{
     const createQuiz = async(data:QuizInterface)=>await repository.createQuiz(data);
     const upgradeToPremium = async (userId:string)=>await repository.upgradeToPremium(userId);
     const fetchAllQuiz = async ()=> await repository.fetchAllQuiz();
+    const fetchQuiz = async (quizId:string) => await repository.fetchQuiz(quizId)
     return {
         addUser,
         getUserEmail,
         createQuiz,
         upgradeToPremium,
-        fetchAllQuiz
+        fetchAllQuiz,
+        fetchQuiz
     }
 }
 
