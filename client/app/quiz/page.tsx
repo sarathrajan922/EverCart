@@ -4,9 +4,22 @@ import HomeNavBar from "@/components/HomeNavBar";
 import QuizList from "@/components/quizList";
 import fetchAllQuizDataApi from "@/features/axios/api/fetchAllQuiz";
 import fetchQuizDataApi from "@/features/axios/api/fetchQuiz";
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
+import QuizListShimmer from "@/components/shimmer/quizListShimmer";
 
+
+interface QuizDetails {
+  _id: string;
+  createdBy: string;
+  premium: boolean;
+  category: string;
+}
 const QuizPage: React.FC = () => {
+  const [isLoad,setIsLoad] = useState<boolean>(false);
+  const [quizData ,setQuizData] = useState<QuizDetails [] | null>(null)
+
+
+
   const dummyQuizzes = [
     {
       category: "Mathematics",
@@ -57,15 +70,19 @@ const QuizPage: React.FC = () => {
   ];
 
   useEffect(() => {
-    fetchQuizDataApi('65c51d471b877ac688039ca0').then((res) => {
-      console.log(res);
+    fetchAllQuizDataApi().then((res) => {
+      
+      setQuizData(res?.quizData?.fetchAllQuizData)
+      setIsLoad(true)
     });
   }, []);
+
+  
   return (
     <>
       <HomeNavBar />
       <main className="flex min-h-screen items-center justify-around  mx-24 px-14">
-        <QuizList quizzes={dummyQuizzes} />
+        {!isLoad && !quizData ? <QuizListShimmer/> :  <QuizList quizzes={quizData} />} 
       </main>
     </>
   );
