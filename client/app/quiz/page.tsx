@@ -70,12 +70,17 @@ const QuizPage: React.FC = () => {
   ];
 
   useEffect(() => {
-    fetchAllQuizDataApi().then((res) => {
-      
+    fetchAllQuizDataApi().then((res) => { 
       setQuizData(res?.quizData?.fetchAllQuizData)
       setIsLoad(true)
     });
   }, []);
+
+  useEffect(()=>{
+    fetchQuizDataApi('65c5d0c49f50eed446ddc49a').then((res)=>{
+      console.log(res)
+    })
+  },[])
 
   
   return (
