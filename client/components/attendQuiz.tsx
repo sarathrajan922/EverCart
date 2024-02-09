@@ -1,79 +1,199 @@
-'use client'
-import React, { useState, useEffect } from 'react';
-
-
+"use client";
+import React, { useState } from "react";
+import HomeNavBar from "./HomeNavBar";
+import { useRouter } from "next/navigation";
 
 interface Option {
-    _id: string;
-    text: string;
-    isCorrect: boolean;
-  }
-  
-  interface Question {
-    _id: string;
-    question: string;
-    options: Option[];
-  }
-  
-  interface QuizData {
-    _id: string;
-    createdBy: string;
-    premium: boolean;
-    category: string;
-    questions: Question[];
-  }
+  text: string;
+  isCorrect: boolean;
+  _id: string;
+}
 
-  const Quiz: React.FC<{ fetchQuizData: QuizData }> = ({ fetchQuizData }) => {
-    const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
-    const [selectedOptions, setSelectedOptions] = useState<{ [key: string]: string }>({});
-  
-    const currentQuestion: Question = fetchQuizData.questions[currentQuestionIndex];
-  
-    const handleOptionSelect = (optionId: string) => {
-      setSelectedOptions(prevOptions => ({
-        ...prevOptions,
-        [currentQuestion._id]: optionId
-      }));
-  
-      if (currentQuestionIndex < fetchQuizData.questions.length - 1) {
-        setCurrentQuestionIndex(prevIndex => prevIndex + 1);
-      } else {
-        // Quiz completed, process the selected options
-        const quizData = fetchQuizData.questions.map(question => ({
-          questionId: question._id,
-          selectedOption: selectedOptions[question._id] || ''
-        }));
-        console.log(quizData);
-      }
-    };
-  
-    return (
-      <div className="quiz-container p-4">
-        <h1 className="text-2xl font-bold mb-4">{fetchQuizData.category} Quiz</h1>
-        <div className="question bg-white p-4 rounded-lg shadow-md">
-          <h2 className="text-lg font-semibold mb-2">Question {currentQuestionIndex + 1}</h2>
-          <p className="text-gray-700 mb-4">{currentQuestion.question}</p>
-          <ul className="space-y-2">
-            {currentQuestion.options.map((option: Option) => (
-              <li key={option._id}>
-                <button
-                  className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
-                  onClick={() => handleOptionSelect(option._id)}
-                >
-                  {option.text}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    );
-  };
-  
-  export default Quiz;
-  
+interface Question {
+  question: string;
+  options: Option[];
+  _id: string;
+}
+
+interface QuizData {
+  _id: string;
+  createdBy: string;
+  premium: boolean;
+  category: string;
+  questions: Question[];
+  __v: number;
+}
+
+interface QuizResult {
+  TotalScore: string;
+  quizId: string;
+  date: any;
+  Result: {
+    question: string;
+    correctOption: string;
+    selectedOption: string;
+  }[];
+}
+
+const Quiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
+  const router = useRouter();
  
   
   
 
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedOptions, setSelectedOptions] = useState<(number | any)[]>(
+    new Array(quizData.questions.length).fill(null)
+  );
+  const [correctAnswers, setCorrectAnswers] = useState<number>(0);
+  const [quizCompleted, setQuizCompleted] = useState<boolean>(false);
+  const [showResult, setShowResult] = useState<boolean>(false);
 
+  const handleOptionSelect = (optionIndex: number) => {
+    const updatedSelectedOptions = [...selectedOptions];
+    updatedSelectedOptions[currentQuestionIndex] = optionIndex;
+    setSelectedOptions(updatedSelectedOptions);
+  };
+
+  const handleNextQuestion = () => {
+    if (
+      selectedOptions[currentQuestionIndex] !== null &&
+      quizData.questions[currentQuestionIndex].options[
+        selectedOptions[currentQuestionIndex]
+      ].isCorrect
+    ) {
+      setCorrectAnswers(correctAnswers + 1);
+    }
+
+    if (currentQuestionIndex < quizData.questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    } else {
+      setQuizCompleted(true);
+    }
+  };
+
+  const generateFinalResult = (): QuizResult => {
+    const result: {
+      question: string;
+      correctOption: string;
+      selectedOption: string;
+    }[] = [];
+
+    for (let i = 0; i < quizData.questions.length; i++) {
+      const question = quizData.questions[i].question;
+      const correctOption =
+        quizData.questions[i].options.find((option) => option.isCorrect)
+          ?.text || "Not answered";
+      const selectedOptionIndex = selectedOptions[i];
+      const selectedOption =
+        selectedOptionIndex !== null
+          ? quizData.questions[i].options[selectedOptionIndex].text
+          : "Not answered";
+
+      result.push({ question, correctOption, selectedOption });
+    }
+
+    const totalScoreString = `${correctAnswers} out of ${quizData.questions.length}`;
+    return {
+      TotalScore: totalScoreString,
+      Result: result,
+      quizId: quizData._id,
+      date: new Date(),
+    };
+  };
+
+  const handleFinishQuiz = () => {
+    const finalResult = generateFinalResult();
+    console.log('Final Result:', finalResult); 
+    setShowResult(true);
+    console.log(finalResult);
+   
+    router.push(`/result/${finalResult}`);
+    
+  };
+
+  return (
+    <>
+      <HomeNavBar />
+      <main className="flex min-h-screen items-center justify-around mx-24 px-14">
+        <div className="max-w-md mx-auto p-4">
+          {quizData.questions.map((question, index) => (
+            <div
+              key={question._id}
+              className={`mb-6 ${
+                index !== currentQuestionIndex ? "hidden" : ""
+              }`}
+            >
+              <h2 className="text-lg font-semibold mb-2">
+                {question.question}
+              </h2>
+              {question.options.map((option, optionIndex) => (
+                <button
+                  key={option._id}
+                  className={`block w-full p-2 mb-2 rounded border ${
+                    selectedOptions[currentQuestionIndex] === optionIndex
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-200"
+                  }`}
+                  disabled={
+                    quizCompleted ||
+                    selectedOptions[currentQuestionIndex] !== null
+                  }
+                  onClick={() => handleOptionSelect(optionIndex)}
+                >
+                  {option.text}
+                </button>
+              ))}
+              {!quizCompleted &&
+                (index !== quizData.questions.length - 1 ||
+                  selectedOptions[currentQuestionIndex] !== null) && (
+                  <button
+                    className="block w-full p-2 mb-2 rounded bg-green-500 text-white"
+                    onClick={handleNextQuestion}
+                    disabled={selectedOptions[currentQuestionIndex] === null}
+                  >
+                    Next
+                  </button>
+                )}
+            </div>
+          ))}
+          {quizCompleted && !showResult && (
+            <button
+              className="block w-full p-2 mb-2 rounded bg-green-500 text-white"
+              onClick={handleFinishQuiz}
+            >
+              Finish
+            </button>
+          )}
+          {showResult && (
+            <div>
+              <h2 className="text-lg font-semibold mb-2">Quiz Result</h2>
+              {quizData.questions.map((question, index) => (
+                <div key={question._id} className="mb-4">
+                  <p>
+                    <strong>Question:</strong> {question.question}
+                  </p>
+                  <p>
+                    <strong>Correct Option:</strong>{" "}
+                    {question.options.find((option) => option.isCorrect)?.text}
+                  </p>
+                  <p>
+                    <strong>Your Option:</strong>{" "}
+                    {selectedOptions[index] !== null
+                      ? question.options[selectedOptions[index]].text
+                      : "Not answered"}
+                  </p>
+                </div>
+              ))}
+              <p>
+                <strong>Total Score:</strong> {correctAnswers} out of{" "}
+                {quizData.questions.length}
+              </p>
+            </div>
+          )}
+        </div>
+      </main>
+    </>
+  );
+};
+export default Quiz;

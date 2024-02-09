@@ -21,7 +21,7 @@ function AttendQuiz({params}: {params: {id: number}}) {
   return (
     <div>
         {
-            quizData && <Quiz fetchQuizData={quizData}/>
+            quizData && <Quiz quizData={quizData}/>
         }
         
     </div>

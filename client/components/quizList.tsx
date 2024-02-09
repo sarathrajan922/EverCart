@@ -1,6 +1,7 @@
 import React, { ReactNode, useState } from "react";
 import PremiumButton from "./Buttons/premiumButton";
 import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 interface QuizDetails {
   _id: string;
   createdBy: string;
@@ -9,6 +10,7 @@ interface QuizDetails {
 }
 
 const QuizList: React.FC<any> = ({ quizzes }) => {
+  const router = useRouter()
   const quizConfirmation = async (quizId: string) => {
     const { value: accept } = await Swal.fire({
       title: "Instructions",
@@ -73,10 +75,11 @@ const QuizList: React.FC<any> = ({ quizzes }) => {
     });
     if (accept) {
       console.log(quizId)
-      Swal.fire("You agreed with T&C :)");
+     router.push(`/quiz/${quizId}`)
     }
   };
 
+  //todo check the user is premium user or not
   const [isPremium, setIsPremium] = useState<boolean>(false);
   return (
     <main className="my-32 px-14">
