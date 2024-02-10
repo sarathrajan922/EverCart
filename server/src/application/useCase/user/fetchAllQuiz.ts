@@ -9,7 +9,7 @@ export const fetchAllQuizUseCase = async (
 ) => {
     const fetchAllQuizData = await userRepository.fetchAllQuiz()
     if(!fetchAllQuizData){
-        throw new AppError('interal server error',HttpStatus.INTERNAL_SERVER_ERROR)
+        throw new AppError('internal server error',HttpStatus.INTERNAL_SERVER_ERROR)
     }
 
     return {

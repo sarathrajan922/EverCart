@@ -2,6 +2,7 @@ import User from "../model/userModel";
 import { UserRegisterInterface } from "../../../../types/user";
 import { QuizInterface } from "../../../../types/quiz";
 import Quiz from "../model/quizModel";
+import QuizResult from "../model/quizResultModel";
 
 export const userRepositoryMongoDB = () => {
   const addUser = async (user: UserRegisterInterface) => {
@@ -51,13 +52,23 @@ export const userRepositoryMongoDB = () => {
     }
   }
 
+  const addQuizResult = async(obj:any)=>{
+    try{
+      return await QuizResult.create(obj);
+
+    }catch(error){
+      throw error;
+    }
+  }
+
   return {
     addUser,
     getUserEmail,
     createQuiz,
     upgradeToPremium,
     fetchAllQuiz,
-    fetchQuiz
+    fetchQuiz,
+    addQuizResult  
   };
 };
 

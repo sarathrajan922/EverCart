@@ -14,7 +14,7 @@ const quizResultSchema = new Schema({
         required:[true,'please provide date field']
     },
     result : [{}],
-    total: {
+    TotalScore: {
         type:String,
         required: [true,'please provide total score']
     }
