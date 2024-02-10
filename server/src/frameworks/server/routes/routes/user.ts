@@ -33,7 +33,7 @@ const userRouter = () => {
 
   router.get('/getQuiz/:quizId',authenticationMiddleware,userRoleCheckMiddleware,quizControl.fetchQuiz)
   router.post('/addQuizResult',authenticationMiddleware,userRoleCheckMiddleware,quizControl.addQuizResult)
-  
+  router.get('/getQuizResults',authenticationMiddleware,userRoleCheckMiddleware,quizControl.userQuizResults)
   router.post(
     "/razorpay",
     authenticationMiddleware,

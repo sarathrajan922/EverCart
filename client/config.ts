@@ -8,7 +8,8 @@ export const urls = {
     RAZORPAY_VERIRY_PAYMENT: 'user/verifyPayment',
     FETCH_ALL_QUIZ_DATA:'user/getAllQuizData',
     FETCH_QUIZ : 'user/getQuiz/',
-    ADD_QUIZ_RESULT: 'user/addQuizResult'
+    ADD_QUIZ_RESULT: 'user/addQuizResult',
+    FETCH_RESULTS: 'user/getQuizResults'
 }
 
 export default BASE_URL;

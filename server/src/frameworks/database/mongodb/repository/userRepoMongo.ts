@@ -61,6 +61,14 @@ export const userRepositoryMongoDB = () => {
     }
   }
 
+  const userQuizResults = async(userId:string)=>{
+    try{
+      return await QuizResult.find({userId})
+    }catch(error){
+      throw error
+    }
+  }
+
   return {
     addUser,
     getUserEmail,
@@ -68,7 +76,8 @@ export const userRepositoryMongoDB = () => {
     upgradeToPremium,
     fetchAllQuiz,
     fetchQuiz,
-    addQuizResult  
+    addQuizResult,
+    userQuizResults 
   };
 };
 
