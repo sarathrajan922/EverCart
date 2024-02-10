@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import HomeNavBar from "./HomeNavBar";
-import { useRouter } from "next/navigation";
+import QuizResult from "./quizResult";
 
 interface Option {
   text: string;
@@ -36,7 +36,7 @@ interface QuizResult {
 }
 
 const Quiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
-  const router = useRouter();
+ 
  
   
   
@@ -48,6 +48,8 @@ const Quiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
   const [correctAnswers, setCorrectAnswers] = useState<number>(0);
   const [quizCompleted, setQuizCompleted] = useState<boolean>(false);
   const [showResult, setShowResult] = useState<boolean>(false);
+  const [isFinalResultReady,setIsFinalResultReady]= useState<boolean>(false);
+  const [result,setResult]= useState<any>([])
 
   const handleOptionSelect = (optionIndex: number) => {
     const updatedSelectedOptions = [...selectedOptions];
@@ -107,8 +109,8 @@ const Quiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
     console.log('Final Result:', finalResult); 
     setShowResult(true);
     console.log(finalResult);
-   
-    router.push(`/result/${finalResult}`);
+    setIsFinalResultReady(true)
+    setResult(finalResult)
     
   };
 
@@ -116,7 +118,8 @@ const Quiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
     <>
       <HomeNavBar />
       <main className="flex min-h-screen items-center justify-around mx-24 px-14">
-        <div className="max-w-md mx-auto p-4">
+
+{ isFinalResultReady ? <QuizResult  parsedFinalResult={result}/> : (<div className="max-w-md mx-auto p-4">
           {quizData.questions.map((question, index) => (
             <div
               key={question._id}
@@ -192,6 +195,9 @@ const Quiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
             </div>
           )}
         </div>
+)}
+        
+
       </main>
     </>
   );
