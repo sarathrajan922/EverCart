@@ -9,7 +9,8 @@ export const userDbRepository =(repository:ReturnType<UserRepositoryMongoDB>)=>{
     const upgradeToPremium = async (userId:string)=>await repository.upgradeToPremium(userId);
     const fetchAllQuiz = async ()=> await repository.fetchAllQuiz();
     const fetchQuiz = async (quizId:string) => await repository.fetchQuiz(quizId)
-    const addQuizResult = async(obj:any)=> await repository.addQuizResult(obj)
+    const addQuizResult = async(obj:any)=> await repository.addQuizResult(obj);
+    const userQuizResults = async(userId:string)=> await repository.userQuizResults(userId)
     return {
         addUser,
         getUserEmail,
@@ -17,7 +18,8 @@ export const userDbRepository =(repository:ReturnType<UserRepositoryMongoDB>)=>{
         upgradeToPremium,
         fetchAllQuiz,
         fetchQuiz,
-        addQuizResult
+        addQuizResult,
+        userQuizResults
     }
 }
 

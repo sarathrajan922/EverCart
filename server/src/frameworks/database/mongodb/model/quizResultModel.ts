@@ -1,5 +1,20 @@
 import { model,Schema } from 'mongoose';
 
+const resultItemSchema = new Schema({
+    question: {
+      type: String,
+      required: true
+    },
+    correctOption: {
+      type: String,
+      required: true
+    },
+    selectedOption: {
+      type: String,
+      required: true
+    }
+  });
+
 const quizResultSchema = new Schema({
     quizId:{
         type: String,
@@ -13,7 +28,7 @@ const quizResultSchema = new Schema({
         type:String,
         required:[true,'please provide date field']
     },
-    result : [{}],
+    Result : [resultItemSchema],
     TotalScore: {
         type:String,
         required: [true,'please provide total score']

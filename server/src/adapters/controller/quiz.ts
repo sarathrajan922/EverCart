@@ -11,6 +11,7 @@ import { QuizInterface } from "../../types/quiz";
 import { createQuizUseCase } from "../../application/useCase/user/createQuiz";
 import { fetchQuizUseCase } from "../../application/useCase/user/fetchQuiz";
 import { addQuizResultUseCase } from "../../application/useCase/user/addQuizResult";
+import { userQuizResultsUseCase } from "../../application/useCase/user/fetchuserQuizResults";
 
 const quizController = (
   userDbRepositoryInterface: UserDbInterface,
@@ -70,11 +71,21 @@ const quizController = (
     
   })
 
+  const userQuizResults = asyncHandler(async(req:customRequest,res:Response)=>{
+    const userId = req?.payload?.id ?? ''
+    const result =await userQuizResultsUseCase(userId,dbRepositoryUser)
+    res.json({
+      message: 'user All Quiz Results fetched successfully',
+      result
+    })
+  })
+
   return {
     createQuiz,
     fetchAllQuizData,
     fetchQuiz,
-    addQuizResult
+    addQuizResult,
+    userQuizResults
   };
 };
 
