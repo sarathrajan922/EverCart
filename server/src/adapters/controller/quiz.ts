@@ -10,6 +10,7 @@ import { customRequest } from "../../types/expressCustomRequest";
 import { QuizInterface } from "../../types/quiz";
 import { createQuizUseCase } from "../../application/useCase/user/createQuiz";
 import { fetchQuizUseCase } from "../../application/useCase/user/fetchQuiz";
+import { addQuizResultUseCase } from "../../application/useCase/user/addQuizResult";
 
 const quizController = (
   userDbRepositoryInterface: UserDbInterface,
@@ -46,7 +47,7 @@ const quizController = (
   const fetchQuiz = asyncHandler(async (req: customRequest, res: Response) => {
     const quizId = req?.params.quizId;
 
-    console.log("quiz Id ", quizId);
+   
     const data = await fetchQuizUseCase(quizId, dbRepositoryUser);
 
     res.json({
@@ -55,10 +56,25 @@ const quizController = (
     });
   });
 
+
+  const addQuizResult = asyncHandler(async (req:customRequest,res:Response)=>{
+    const userId = req?.payload?.id ?? ''
+    const quizResult = req?.body
+    quizResult.userId = userId
+
+    const result = await addQuizResultUseCase(dbRepositoryUser,quizResult);
+    res.json({
+      message: "Quiz Result Added successfully",
+      result
+    })
+    
+  })
+
   return {
     createQuiz,
     fetchAllQuizData,
     fetchQuiz,
+    addQuizResult
   };
 };
 
