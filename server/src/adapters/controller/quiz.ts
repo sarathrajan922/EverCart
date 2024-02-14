@@ -12,6 +12,7 @@ import { createQuizUseCase } from "../../application/useCase/user/createQuiz";
 import { fetchQuizUseCase } from "../../application/useCase/user/fetchQuiz";
 import { addQuizResultUseCase } from "../../application/useCase/user/addQuizResult";
 import { userQuizResultsUseCase } from "../../application/useCase/user/fetchuserQuizResults";
+import { getUserByIdUseCase } from "../../application/useCase/user/getUserById";
 
 const quizController = (
   userDbRepositoryInterface: UserDbInterface,
@@ -80,12 +81,22 @@ const quizController = (
     })
   })
 
+  const getUserById = asyncHandler(async(req:customRequest,res:Response)=>{
+    const userId = req?.payload?.id ?? ''
+    const userData = await getUserByIdUseCase(userId,dbRepositoryUser);
+    res.json({
+      message:'userData fetched successful',
+      userData
+    })
+  })
+
   return {
     createQuiz,
     fetchAllQuizData,
     fetchQuiz,
     addQuizResult,
-    userQuizResults
+    userQuizResults,
+    getUserById
   };
 };
 

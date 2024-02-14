@@ -8,6 +8,7 @@ import { UserRegisterInterface } from "../../types/user";
 import { userRegisterUseCase , userLoginUseCase} from "../../application/useCase/auth/auth";
 
 
+
 const authController = (
   authServicesInterface: AuthServicesInterface,
   authService: AuthServiceType,
@@ -46,9 +47,12 @@ const authController = (
     })
   })
 
+  
+
   return {
     userRegister,
-    userLogin
+    userLogin,
+   
   };
 };
 

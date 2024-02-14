@@ -9,7 +9,8 @@ export const urls = {
     FETCH_ALL_QUIZ_DATA:'user/getAllQuizData',
     FETCH_QUIZ : 'user/getQuiz/',
     ADD_QUIZ_RESULT: 'user/addQuizResult',
-    FETCH_RESULTS: 'user/getQuizResults'
+    FETCH_RESULTS: 'user/getQuizResults',
+    GET_USER :'user/getUser'
 }
 
 export default BASE_URL;

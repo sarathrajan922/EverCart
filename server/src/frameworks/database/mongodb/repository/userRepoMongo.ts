@@ -13,6 +13,10 @@ export const userRepositoryMongoDB = () => {
     return await User.findOne({ email });
   };
 
+  const getUserById = async(userId:string)=>{
+    return await User.findOne({_id:userId})
+  }
+
   const createQuiz = async (data: QuizInterface) => {
     return await Quiz.create(data);
   };
@@ -72,12 +76,13 @@ export const userRepositoryMongoDB = () => {
   return {
     addUser,
     getUserEmail,
+    getUserById,
     createQuiz,
     upgradeToPremium,
     fetchAllQuiz,
     fetchQuiz,
     addQuizResult,
-    userQuizResults 
+    userQuizResults
   };
 };
 

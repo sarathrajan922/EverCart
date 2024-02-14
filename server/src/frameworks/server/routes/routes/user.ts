@@ -24,6 +24,8 @@ const userRouter = () => {
     quizControl.createQuiz
   );
 
+  router.get('/getUser',authenticationMiddleware,userRoleCheckMiddleware,quizControl.getUserById)
+
   router.get(
     "/getAllQuizData",
     authenticationMiddleware,

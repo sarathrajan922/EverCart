@@ -28,6 +28,7 @@ const BuyProduct = () => {
 
           if (verifyResult?.result === "success") {
             console.log("Redirecting...");
+            router.push('/home')
             // router.push('/paymentsuccess?paymentid=' + response.razorpay_payment_id);
           }
         },
