@@ -1,11 +1,13 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import AddQuizResultApi from "@/features/axios/api/addQuizResult";
 
-const QuizResult: React.FC<any> = ({ parsedFinalResult }) => {
+const QuizResult: React.FC<any> = ({ parsedFinalResult, from }) => {
+  const [isSaved, setIsSaved] = useState<boolean>(false);
   const handleSave = () => {
     AddQuizResultApi(parsedFinalResult)
       .then((response) => {
-        console.log(response);
+        setIsSaved(true);
       })
       .catch((err) => {
         console.log(err.message);
@@ -47,14 +49,18 @@ const QuizResult: React.FC<any> = ({ parsedFinalResult }) => {
               );
             })}
           </ul>
-          <div className="flex justify-center items-center my-10">
-            <button
-              onClick={() => handleSave()}
-              className="flex justify-center w-1/2  px-3 py-2 text-sm font-medium text-center text-white bg-gray-600 rounded-lg hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500 dark:focus:ring-gray-800"
-            >
-              Save Your Score
-            </button>
-          </div>
+          {from === "attendQuiz" ? (
+            <div className="flex justify-center items-center my-10">
+              {!isSaved && (
+                <button
+                  onClick={() => handleSave()}
+                  className="flex justify-center w-1/2  px-3 py-2 text-sm font-medium text-center text-white bg-gray-600 rounded-lg hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500 dark:focus:ring-gray-800"
+                >
+                  Save Your Score
+                </button>
+              )}
+            </div>
+          ) : null}
         </div>
       )}
     </div>

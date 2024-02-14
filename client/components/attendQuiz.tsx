@@ -36,11 +36,6 @@ interface QuizResult {
 }
 
 const Quiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
- 
- 
-  
-  
-
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOptions, setSelectedOptions] = useState<(number | any)[]>(
     new Array(quizData.questions.length).fill(null)
@@ -48,8 +43,8 @@ const Quiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
   const [correctAnswers, setCorrectAnswers] = useState<number>(0);
   const [quizCompleted, setQuizCompleted] = useState<boolean>(false);
   const [showResult, setShowResult] = useState<boolean>(false);
-  const [isFinalResultReady,setIsFinalResultReady]= useState<boolean>(false);
-  const [result,setResult]= useState<any>([])
+  const [isFinalResultReady, setIsFinalResultReady] = useState<boolean>(false);
+  const [result, setResult] = useState<any>([]);
 
   const handleOptionSelect = (optionIndex: number) => {
     const updatedSelectedOptions = [...selectedOptions];
@@ -106,98 +101,100 @@ const Quiz: React.FC<{ quizData: QuizData }> = ({ quizData }) => {
 
   const handleFinishQuiz = () => {
     const finalResult = generateFinalResult();
-    console.log('Final Result:', finalResult); 
+    console.log("Final Result:", finalResult);
     setShowResult(true);
     console.log(finalResult);
-    setIsFinalResultReady(true)
-    setResult(finalResult)
-    
+    setIsFinalResultReady(true);
+    setResult(finalResult);
   };
 
   return (
     <>
       <HomeNavBar />
       <main className="flex min-h-screen items-center justify-around mx-24 px-14">
-
-{ isFinalResultReady ? <QuizResult  parsedFinalResult={result}/> : (<div className="max-w-md mx-auto p-4">
-          {quizData.questions.map((question, index) => (
-            <div
-              key={question._id}
-              className={`mb-6 ${
-                index !== currentQuestionIndex ? "hidden" : ""
-              }`}
-            >
-              <h2 className="text-lg font-semibold mb-2">
-                {question.question}
-              </h2>
-              {question.options.map((option, optionIndex) => (
-                <button
-                  key={option._id}
-                  className={`block w-full p-2 mb-2 rounded border ${
-                    selectedOptions[currentQuestionIndex] === optionIndex
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-200"
-                  }`}
-                  disabled={
-                    quizCompleted ||
-                    selectedOptions[currentQuestionIndex] !== null
-                  }
-                  onClick={() => handleOptionSelect(optionIndex)}
-                >
-                  {option.text}
-                </button>
-              ))}
-              {!quizCompleted &&
-                (index !== quizData.questions.length - 1 ||
-                  selectedOptions[currentQuestionIndex] !== null) && (
+        {isFinalResultReady ? (
+          <QuizResult parsedFinalResult={result} from={"attendQuiz"} />
+        ) : (
+          <div className="max-w-md mx-auto p-4">
+            {quizData.questions.map((question, index) => (
+              <div
+                key={question._id}
+                className={`mb-6 ${
+                  index !== currentQuestionIndex ? "hidden" : ""
+                }`}
+              >
+                <h2 className="text-lg font-semibold mb-2">
+                  {question.question}
+                </h2>
+                {question.options.map((option, optionIndex) => (
                   <button
-                    className="block w-full p-2 mb-2 rounded bg-green-500 text-white"
-                    onClick={handleNextQuestion}
-                    disabled={selectedOptions[currentQuestionIndex] === null}
+                    key={option._id}
+                    className={`block w-full p-2 mb-2 rounded border ${
+                      selectedOptions[currentQuestionIndex] === optionIndex
+                        ? "bg-blue-500 text-white"
+                        : "bg-gray-200"
+                    }`}
+                    disabled={
+                      quizCompleted ||
+                      selectedOptions[currentQuestionIndex] !== null
+                    }
+                    onClick={() => handleOptionSelect(optionIndex)}
                   >
-                    Next
+                    {option.text}
                   </button>
-                )}
-            </div>
-          ))}
-          {quizCompleted && !showResult && (
-            <button
-              className="block w-full p-2 mb-2 rounded bg-green-500 text-white"
-              onClick={handleFinishQuiz}
-            >
-              Finish
-            </button>
-          )}
-          {showResult && (
-            <div>
-              <h2 className="text-lg font-semibold mb-2">Quiz Result</h2>
-              {quizData.questions.map((question, index) => (
-                <div key={question._id} className="mb-4">
-                  <p>
-                    <strong>Question:</strong> {question.question}
-                  </p>
-                  <p>
-                    <strong>Correct Option:</strong>{" "}
-                    {question.options.find((option) => option.isCorrect)?.text}
-                  </p>
-                  <p>
-                    <strong>Your Option:</strong>{" "}
-                    {selectedOptions[index] !== null
-                      ? question.options[selectedOptions[index]].text
-                      : "Not answered"}
-                  </p>
-                </div>
-              ))}
-              <p>
-                <strong>Total Score:</strong> {correctAnswers} out of{" "}
-                {quizData.questions.length}
-              </p>
-            </div>
-          )}
-        </div>
-)}
-        
-
+                ))}
+                {!quizCompleted &&
+                  (index !== quizData.questions.length - 1 ||
+                    selectedOptions[currentQuestionIndex] !== null) && (
+                    <button
+                      className="block w-full p-2 mb-2 rounded bg-green-500 text-white"
+                      onClick={handleNextQuestion}
+                      disabled={selectedOptions[currentQuestionIndex] === null}
+                    >
+                      Next
+                    </button>
+                  )}
+              </div>
+            ))}
+            {quizCompleted && !showResult && (
+              <button
+                className="block w-full p-2 mb-2 rounded bg-green-500 text-white"
+                onClick={handleFinishQuiz}
+              >
+                Finish
+              </button>
+            )}
+            {showResult && (
+              <div>
+                <h2 className="text-lg font-semibold mb-2">Quiz Result</h2>
+                {quizData.questions.map((question, index) => (
+                  <div key={question._id} className="mb-4">
+                    <p>
+                      <strong>Question:</strong> {question.question}
+                    </p>
+                    <p>
+                      <strong>Correct Option:</strong>{" "}
+                      {
+                        question.options.find((option) => option.isCorrect)
+                          ?.text
+                      }
+                    </p>
+                    <p>
+                      <strong>Your Option:</strong>{" "}
+                      {selectedOptions[index] !== null
+                        ? question.options[selectedOptions[index]].text
+                        : "Not answered"}
+                    </p>
+                  </div>
+                ))}
+                <p>
+                  <strong>Total Score:</strong> {correctAnswers} out of{" "}
+                  {quizData.questions.length}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
       </main>
     </>
   );
