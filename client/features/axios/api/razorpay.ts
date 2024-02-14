@@ -6,7 +6,7 @@ const api = userSetupInterceptors();
 
 const RazorpayApi = async()=>{
     const obj = {
-        total: 12300
+        total: 2000
     }
     try{
         const config:AxiosRequestConfig= {

@@ -1,7 +1,8 @@
-import React, {useState } from "react";
+import React, {useState,useEffect } from "react";
 import PremiumButton from "./Buttons/premiumButton";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
+import GetUserApi from "@/features/axios/api/getUser";
 interface QuizDetails {
   _id: string;
   createdBy: string;
@@ -10,6 +11,7 @@ interface QuizDetails {
 }
 
 const QuizList: React.FC<any> = ({ quizzes }) => {
+  
   const router = useRouter()
   const quizConfirmation = async (quizId: string) => {
     const { value: accept } = await Swal.fire({
@@ -81,6 +83,15 @@ const QuizList: React.FC<any> = ({ quizzes }) => {
 
   //todo check the user is premium user or not
   const [isPremium, setIsPremium] = useState<boolean>(false);
+  useEffect(()=>{
+    GetUserApi().then((response)=>{
+      
+      setIsPremium(response?.userData?.premium)
+    }).catch((error:any)=>{
+      console.log(error.message)
+    })
+  },[])
+  
   return (
     <main className="my-32 px-14">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
