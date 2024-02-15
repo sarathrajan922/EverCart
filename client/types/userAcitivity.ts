@@ -5,7 +5,7 @@ export interface ActivityInterface {
     date: string
     Result: Result[]
     TotalScore: string
-    __v: number
+    category: string
   }
   
   export interface Id {
