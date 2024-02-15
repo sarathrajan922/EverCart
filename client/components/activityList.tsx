@@ -5,6 +5,7 @@ import { format } from "timeago.js";
 import QuizResult from "./quizResult";
 
 const ActivityList: React.FC<any> = ({ activityData }) => {
+  console.log(activityData);
   const [showResult, setShowResult] = useState<boolean>(false);
   const [result, setResult] = useState<any>({});
 
@@ -27,8 +28,13 @@ const ActivityList: React.FC<any> = ({ activityData }) => {
             {activityData && activityData ? (
               activityData.map((item: ActivityInterface, index: number) => (
                 <div key={index} className="bg-white rounded-lg shadow-md p-4">
-                  <h2 className="text-xl font-semibold mb-2">cateory name</h2>
+                  <h2 className="text-xl font-semibold mb-2">
+                    {item.category}
+                  </h2>
                   <p className="text-gray-600 mb-4">{format(item.date)}</p>
+                  <p className="text-gray-600 mb-4">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  </p>
                   <button
                     onClick={() =>
                       confirmShowResult(item.Result, item.TotalScore)

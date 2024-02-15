@@ -13,9 +13,9 @@ export const userRepositoryMongoDB = () => {
     return await User.findOne({ email });
   };
 
-  const getUserById = async(userId:string)=>{
-    return await User.findOne({_id:userId})
-  }
+  const getUserById = async (userId: string) => {
+    return await User.findOne({ _id: userId });
+  };
 
   const createQuiz = async (data: QuizInterface) => {
     return await Quiz.create(data);
@@ -33,45 +33,72 @@ export const userRepositoryMongoDB = () => {
     try {
       return await Quiz.aggregate([
         {
-          $project:{
+          $project: {
             category: 1,
             createdBy: 1,
-              premium: 1,
-             _id: 1,
-
-          }
-        }
+            premium: 1,
+            _id: 1,
+          },
+        },
       ]);
     } catch (error) {
       throw error;
     }
   };
 
-  const fetchQuiz = async (quizId:string)=>{
-    try{
-      return await Quiz.findOne({_id: quizId})
-
-    }catch(error){
+  const fetchQuiz = async (quizId: string) => {
+    try {
+      return await Quiz.findOne({ _id: quizId });
+    } catch (error) {
       throw error;
     }
-  }
+  };
 
-  const addQuizResult = async(obj:any)=>{
-    try{
+  const addQuizResult = async (obj: any) => {
+    try {
       return await QuizResult.create(obj);
-
-    }catch(error){
+    } catch (error) {
       throw error;
     }
-  }
+  };
 
-  const userQuizResults = async(userId:string)=>{
-    try{
-      return await QuizResult.find({userId})
-    }catch(error){
-      throw error
+  const userQuizResults = async (userId: string) => {
+    try {
+      return await QuizResult.aggregate([
+        {
+          $match: { userId: userId },
+        },
+        {
+          $addFields: {
+            quizObjectId: { $toObjectId: "$quizId" },
+          },
+        },
+        {
+          $lookup: {
+            from: "quiz",
+            localField: "quizObjectId",
+            foreignField: "_id",
+            as: "quiz",
+          },
+        },
+        {
+          $unwind: "$quiz",
+        },
+        {
+          $project: {
+            userId: 1,
+            date: 1,
+            TotalScore: 1,
+            category: "$quiz.category",
+            quizId: 1,
+            Result: 1,
+          },
+        },
+      ]);
+    } catch (error) {
+      throw error;
     }
-  }
+  };
 
   return {
     addUser,
@@ -82,7 +109,7 @@ export const userRepositoryMongoDB = () => {
     fetchAllQuiz,
     fetchQuiz,
     addQuizResult,
-    userQuizResults
+    userQuizResults,
   };
 };
 
